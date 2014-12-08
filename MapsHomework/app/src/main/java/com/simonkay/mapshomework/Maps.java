@@ -5,49 +5,43 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.*;
+
+
 
 
 public class Map extends Activity {
+
+    GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        createMapView();
-        addMarker();
-    }
 
-    private void createMapView(){
-        try {
-            if(null == googleMap) {
-                googleMap = ((Map)getFragmentManager().findFragmentById(
-                        R.id.mapView)).getMap();
-                if(null == googleMap) {
-                    Toast.makeText(getApplicationContext(),
-                            "Error Creating Map", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-        } catch (NullPointerException exception){
-            Log.e("MapsHomework", exception.toString());
-        }
-    }
-
-    private void addMarker(){
-
-        if(null != googleMap){
-            googleMap.addMarker(new MarkerOptions())
-                    .position(new LatLong(0, 0))
-                    .title("Marker")
-                    .draggable(true);
+        if(null == googleMap) {
+            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                    R.id.mapView()).getMap();
 
         }
+        if(googleMap != null)
+        {
+            googleMap.addMarker(new MarkerOptions()
+            .postition(new LatLng(0,0))
+            .title ("Marker")
+            .draggable(true));
+            googleMap.addMarker(new MarkerOptions()
+            .position(newLatLng(20,20))
+            .title("Marker")
+            .draggable(true));
+            googleMap.addMarker(new MarkerOptions()
+            .position(newLatLng(30,30)));
+        }
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
